@@ -30,59 +30,33 @@ public class Board {
     /**
      * Point Gain Pattern
      */
-    private static final int LH3_1 = 100;
-    private static final int LH3_2 = 110;
-    private static final int LH3_3 = 120;
-    private static final int LH4_1 = 210;
-    private static final int LH4_2 = 220;
-    private static final int LH4_3 = 230;
-    private static final int LH4_4 = 240;
-    private static final int LH5_1 = 300;
-    private static final int LH5_2 = 310;
-    private static final int LH5_3 = 320;
-    private static final int LH5_4 = 330;
-    private static final int LH5_5 = 340;
+    private static final int H3_1 = 100;
+    private static final int H3_2 = 110;
+    private static final int H3_3 = 120;
+    private static final int H4_1 = 210;
+    private static final int H4_2 = 220;
+    private static final int H4_3 = 230;
+    private static final int H4_4 = 240;
+    private static final int H5_1 = 300;
+    private static final int H5_2 = 310;
+    private static final int H5_3 = 320;
+    private static final int H5_4 = 330;
+    private static final int H5_5 = 340;
 
-    private static final int LV3_1 = 400;
-    private static final int LV3_2 = 410;
-    private static final int LV3_3 = 420;
-    private static final int LV4_1 = 500;
-    private static final int LV4_2 = 510;
-    private static final int LV4_3 = 520;
-    private static final int LV4_4 = 530;
-    private static final int LV5_1 = 600;
-    private static final int LV5_2 = 610;
-    private static final int LV5_3 = 620;
-    private static final int LV5_4 = 630;
-    private static final int LV5_5 = 640;
+    private static final int V3_1 = 400;
+    private static final int V3_2 = 410;
+    private static final int V3_3 = 420;
+    private static final int V4_1 = 500;
+    private static final int V4_2 = 510;
+    private static final int V4_3 = 520;
+    private static final int V4_4 = 530;
+    private static final int V5_1 = 600;
+    private static final int V5_2 = 610;
+    private static final int V5_3 = 620;
+    private static final int V5_4 = 630;
+    private static final int V5_5 = 640;
 
-    private static final int RH3_1 = 700;
-    private static final int RH3_2 = 710;
-    private static final int RH3_3 = 720;
-    private static final int RH4_1 = 800;
-    private static final int RH4_2 = 810;
-    private static final int RH4_3 = 820;
-    private static final int RH4_4 = 830;
-    private static final int RH5_1 = 900;
-    private static final int RH5_2 = 910;
-    private static final int RH5_3 = 920;
-    private static final int RH5_4 = 930;
-    private static final int RH5_5 = 940;
-
-    private static final int RV3_1 = 1000;
-    private static final int RV3_2 = 1010;
-    private static final int RV3_3 = 1020;
-    private static final int RV4_1 = 1100;
-    private static final int RV4_2 = 1110;
-    private static final int RV4_3 = 1120;
-    private static final int RV4_4 = 1130;
-    private static final int RV5_1 = 1200;
-    private static final int RV5_2 = 1210;
-    private static final int RV5_3 = 1220;
-    private static final int RV5_4 = 1230;
-    private static final int RV5_5 = 1240;
-
-    private static final int NOLINE = 9999;
+    private static final int NOLINE = 99999;
 
     static JFrame frame = new JFrame("[BOARD]");
     static VisualBoard vb;
@@ -128,14 +102,14 @@ public class Board {
         } else {
             // check three horizontal
             if (y >= 2) {
-                if (B[x * M + y - 1] == filler && B[x * M + y - 2] == filler) {
+                if (B[x * N + y - 1] == filler && B[x * N + y - 2] == filler) {
                     flag = true;
                 }
             }
 
             // check three vertical
             if (x >= 2) {
-                if (B[(x - 1) * M + y] == filler && B[(x - 2) * M + y] == filler) {
+                if (B[(x - 1) * N + y] == filler && B[(x - 2) * N + y] == filler) {
                     flag = true;
                 }
             }
@@ -173,315 +147,228 @@ public class Board {
                 }
             }
         }
+        System.out.println("\n");
     }
 
     /**
-     * @param x1
-     * @param y1 交换前坐标
-     * @param x2
-     * @param y2 交换后坐标
+     * @param x
+     * @param y
      * @return
      */
-    static int checkLine(int x1, int y1, int x2, int y2) {
-        int before_color = B[x1 * N + y1];
-        int after_color = B[x2 * N + y2];
-        if (before_color == after_color || before_color == 0 || after_color == 0) {
-            return NOLINE;
-        }
+    static int checkLine(int x, int y) {
+        int color = B[x * N + y];
 
-        int counter = 1;
-
-        int res = 0;
+        int res = NOLINE;
 
         /*
          check horizontal 5
          */
-        if (y2 + 4 < N) {     // check 5_1
-            if (B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color &&
-                    B[x2 * N + y2 + 3] == before_color &&
-                    B[x2 * N + y2 + 4] == before_color) {
-                res = RH5_1;
+        if (y + 4 < N) {     // check h 5_1
+            if (B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color &&
+                    B[x * N + y + 3] == color &&
+                    B[x * N + y + 4] == color) {
+                return H5_1;
             }
         }
-        if (y2 + 3 < N && y2 - 1 >= 0) {     // check 5_2
-            if (B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color &&
-                    B[x2 * N + y2 + 3] == before_color) {
-                res = RH5_2;
+        if (y + 3 < N && y - 1 >= 0) {     // check h 5_2
+            if (B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color &&
+                    B[x * N + y + 3] == color) {
+                return H5_2;
             }
         }
-        if (y2 + 2 < N && y2 - 2 >= 0) {     // check 5_3
-            if (B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color) {
-                res = RH5_3;
+        if (y + 2 < N && y - 2 >= 0) {     // check h 5_3
+            if (B[x * N + y - 2] == color &&
+                    B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color) {
+                return H5_3;
             }
         }
-        if (y2 + 1 < N && y2 - 3 >= 0) {     // check 5_4
-            if (B[x2 * N + y2 - 3] == before_color &&
-                    B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color) {
-                res = RH5_4;
+        if (y + 1 < N && y - 3 >= 0) {     // check h 5_4
+            if (B[x * N + y - 3] == color &&
+                    B[x * N + y - 2] == color &&
+                    B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color) {
+                return H5_4;
             }
         }
-        if (y2 - 4 >= 0) {     // check 5_5
-            if (B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 3] == before_color &&
-                    B[x2 * N + y2 - 4] == before_color) {
-                res = RH5_5;
+        if (y - 4 >= 0) {     // check h 5_5
+            if (B[x * N + y - 1] == color &&
+                    B[x * N + y - 2] == color &&
+                    B[x * N + y - 3] == color &&
+                    B[x * N + y - 4] == color) {
+                return H5_5;
             }
         }
 
         /*
          check horizontal 4
          */
-        if (y2 + 3 < N) {     // check 4_1
-            if (B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color &&
-                    B[x2 * N + y2 + 3] == before_color) {
-                res = RH4_1;
+        if (y + 3 < N) {     // check h 4_1
+            if (B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color &&
+                    B[x * N + y + 3] == color) {
+                return H4_1;
             }
         }
-        if (y2 + 2 < N && y2 - 1 >= 0) {     // check 4_2
-            if (B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color) {
-                res = RH4_2;
+        if (y + 2 < N && y - 1 >= 0) {     // check h 4_2
+            if (B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color) {
+                return H4_2;
             }
         }
-        if (y2 + 1 < N && y2 - 2 >= 0) {     // check 4_1
-            if (B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color) {
-                res = RH4_3;
+        if (y + 1 < N && y - 2 >= 0) {     // check h 4_1
+            if (B[x * N + y - 2] == color &&
+                    B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color) {
+                return H4_3;
             }
         }
-        if (y2 - 3 >= 0) {     // check 4_1
-            if (B[x2 * N + y2 - 3] == before_color &&
-                    B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 1] == before_color) {
-                res = RH4_4;
+        if (y - 3 >= 0) {     // check h 4_1
+            if (B[x * N + y - 3] == color &&
+                    B[x * N + y - 2] == color &&
+                    B[x * N + y - 1] == color) {
+                return H4_4;
             }
         }
 
         /*
          check horizontal 3
          */
-        if (y2 + 2 < N) {     // check 3_1
-            if (B[x2 * N + y2 + 1] == before_color &&
-                    B[x2 * N + y2 + 2] == before_color) {
-                res = RH3_1;
+        if (y + 2 < N) {     // check h 3_1
+            if (B[x * N + y + 1] == color &&
+                    B[x * N + y + 2] == color) {
+                return H3_1;
             }
         }
-        if (y2 + 1 < N && y2 - 1 >= 0) {     // check 3_2
-            if (B[x2 * N + y2 - 1] == before_color &&
-                    B[x2 * N + y2 + 1] == before_color) {
-                res = RH3_2;
+        if (y + 1 < N && y - 1 >= 0) {     // check h 3_2
+            if (B[x * N + y - 1] == color &&
+                    B[x * N + y + 1] == color) {
+                return H3_2;
             }
         }
-        if (y2 - 2 >= 0) {     // check 3_3
-            if (B[x2 * N + y2 - 2] == before_color &&
-                    B[x2 * N + y2 - 1] == before_color) {
-                res = RH3_3;
+        if (y - 2 >= 0) {     // check h 3_3
+            if (B[x * N + y - 2] == color &&
+                    B[x * N + y - 1] == color) {
+                return H3_3;
             }
         }
 
         /*
          check vertical 5
          */
-
-
-
-        /*
-         right 1 horizontal check
-         */
-        if (y2 + 2 < N) {
-            if (B[x2 * N + y2 + 1] == before_color) {
-                counter++;
+        if (x + 4 < M) {  // check v 5_1
+            if (B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color &&
+                    B[(x + 3) * N + y] == color &&
+                    B[(x + 4) * N + y] == color) {
+                return V5_1;
             }
-            if (B[x2 * N + y2 + 2] == before_color) {
-                counter++;
-            }
-
-            if (y2 + 3 < N && counter == 3) {
-                if (B[x2 * N + y2 + 3] == before_color) {
-                    counter++;
-                }
-                if (y2 + 4 < N && counter == 4) {
-                    if (B[x2 * N + y2 + 4] == before_color) {
-                        counter++;
-                    }
-                }
-            }
-
         }
-
-        if (counter == 3) {
-            return RH3_1;
-        } else if (counter == 4) {
-            return RH4_1;
-        } else if (counter == 5) {
-            return RH5_1;
-        } else {
-            counter = 1;
+        if (x + 3 < M && x - 1 >= 0) {  // check v 5_2
+            if (B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color &&
+                    B[(x + 3) * N + y] == color) {
+                return V5_2;
+            }
         }
-
-        /*
-         right 2 horizontal check
-         */
-        if (y2 + 1 < N && y2 - 1 >= 0) {
-            if (B[x2 * N + y2 - 1] == before_color) {
-                counter++;
+        if (x + 2 < M && x - 2 >= 0) {  // check v 5_3
+            if (B[(x - 2) * N + y] == color &&
+                    B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color) {
+                return V5_3;
             }
-            if (B[x2 * N + y2 + 1] == before_color) {
-                counter++;
-            }
-
-            if (y2 + 2 < N && counter == 3) {
-                if (B[x2 * N + y2 + 2] == before_color) {
-                    counter++;
-                }
-                if (y2 + 3 < N && counter == 4) {
-                    if (B[x2 * N + y2 + 3] == before_color) {
-                        counter++;
-                    }
-                }
-            }
-
         }
-
-        if (counter == 3) {
-            return RH3_2;
-        } else if (counter == 4) {
-            return RH4_2;
-        } else if (counter == 5) {
-            return RH5_2;
-        } else {
-            counter = 1;
+        if (x + 1 < M && x - 3 >= 0) {  // check v 5_4
+            if (B[(x - 3) * N + y] == color &&
+                    B[(x - 2) * N + y] == color &&
+                    B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color) {
+                return V5_4;
+            }
         }
-
-
-
-
-        /*
-         right vertical check
-         */
-        if (x2 + 2 < M) {
-            if (B[(x2 + 1) * N + y2] == before_color) {
-                counter++;
+        if (x - 4 >= 0) {  // check v 5_5
+            if (B[(x - 4) * N + y] == color &&
+                    B[(x - 3) * N + y] == color &&
+                    B[(x - 2) * N + y] == color &&
+                    B[(x - 1) * N + y] == color) {
+                return V5_5;
             }
-            if (B[(x2 + 2) * N + y2] == before_color) {
-                counter++;
-            }
-
-            if (x2 + 3 < M && counter == 3) {
-                if (B[(x2 + 3) * N + y2] == before_color) {
-                    counter++;
-                }
-                if (x2 + 4 < M && counter == 4) {
-                    if (B[(x2 + 4) * N + y2] == before_color) {
-                        counter++;
-                    }
-                }
-            }
-
-        }
-
-        if (counter == 3) {
-            return RV3;
-        } else if (counter == 4) {
-            return RV4;
-        } else if (counter == 5) {
-            return RV5;
-        } else {
-            counter = 1;
         }
 
         /*
-         horizontal check
+         check vertical 4
          */
-        if (y1 - 2 >= 0) {
-            if (B[x1 * N + y1 - 1] == after_color) {
-                counter++;
+        if (x + 3 < M) {  // check v 4_1
+            if (B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color &&
+                    B[(x + 3) * N + y] == color) {
+                return V4_1;
             }
-            if (B[x1 * N + y1 - 2] == after_color) {
-                counter++;
-            }
-
-            if (y1 - 3 >= 0 && counter == 3) {
-                if (B[x1 * N + y1 - 3] == after_color) {
-                    counter++;
-                }
-                if (y1 - 4 >= 0 && counter == 4) {
-                    if (B[x1 * N + y1 - 4] == after_color) {
-                        counter++;
-                    }
-                }
-            }
-
         }
-
-        if (counter == 3) {
-            return LH3;
-        } else if (counter == 4) {
-            return LH4;
-        } else if (counter == 5) {
-            return LH5;
-        } else {
-            counter = 1;
+        if (x + 2 < M && x - 1 >= 0) {  // check v 4_2
+            if (B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color) {
+                return V4_2;
+            }
+        }
+        if (x + 1 < M && x - 2 >= 0) {  // check v 4_3
+            if (B[(x - 2) * N + y] == color &&
+                    B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color) {
+                return V4_3;
+            }
+        }
+        if (x - 3 >= 0) {  // check v 4_4
+            if (B[(x - 3) * N + y] == color &&
+                    B[(x - 2) * N + y] == color &&
+                    B[(x - 1) * N + y] == color) {
+                return V4_4;
+            }
         }
 
         /*
-         vertical check
+         check vertical 3
          */
-        if (x1 - 2 >= 0) {
-            if (B[(x1 - 1) * N + y1] == after_color) {
-                counter++;
+        if (x + 2 < M) {  // check v 3_1
+            if (B[(x + 1) * N + y] == color &&
+                    B[(x + 2) * N + y] == color) {
+                return V3_1;
             }
-            if (B[(x1 - 2) * N + y1] == after_color) {
-                counter++;
+        }
+        if (x + 1 < M && x - 1 >= 0) {  // check v 3_2
+            if (B[(x - 1) * N + y] == color &&
+                    B[(x + 1) * N + y] == color) {
+                return V3_2;
             }
-
-            if (x1 - 3 >= 0 && counter == 3) {
-                if (B[(x1 - 3) * N + y1] == after_color) {
-                    counter++;
-                }
-                if (x1 - 4 >= 0 && counter == 4) {
-                    if (B[(x1 - 4) * N + y1] == after_color) {
-                        counter++;
-                    }
-                }
+        }
+        if (x - 2 >= 0) {  // check v 3_3
+            if (B[(x - 1) * N + y] == color &&
+                    B[(x - 2) * N + y] == color) {
+                return V3_3;
             }
-
         }
 
-        if (counter == 3) {
-            return LV3;
-        } else if (counter == 4) {
-            return LV4;
-        } else if (counter == 5) {
-            return LV5;
-        } else {
-            return NOLINE;
-        }
+        return NOLINE;
     }
 
     /**
-     * @param x1
-     * @param y1 交换前坐标
-     * @param x2
-     * @param y2 交换后坐标
-     * @return
+     * @param x
+     * @param y
+     * @param res Lined up result
+     * @throws Exception
      */
-    static void clear(int x1, int y1, int x2, int y2) throws Exception {
-        int res = checkLine(x1, y1, x2, y2);
+    static void clear(int x, int y, int res) throws Exception {
 
-        if (res != NOLINE) {
+
+        /*if (res != NOLINE) {
             swap(x1, y1, x2, y2);
             Thread.sleep(1500);
 
@@ -499,148 +386,308 @@ public class Board {
             Thread.sleep(1500);
             System.out.println("[SWAP2]");
             frame.repaint();
-        }
+        }*/
 
         int i;  // counter
         switch (res) {
-            case RH3: {
-                B[x2 * N + y2] = 0;
-                B[x2 * N + y2 + 1] = 0;
-                B[x2 * N + y2 + 2] = 0;
+            case H5_1: {
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
+                B[x * N + y + 3] = 0;
+                B[x * N + y + 4] = 0;
 
-                for (i = y2 + 2; (i - 3) >= 0; i--) {
-                    B[x2 * N + i] = B[x2 * N + i - 3];
+                for (i = y + 4; (i - 5) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case RH4: {
-                B[x2 * N + y2] = 0;
-                B[x2 * N + y2 + 1] = 0;
-                B[x2 * N + y2 + 2] = 0;
-                B[x2 * N + y2 + 3] = 0;
+            case H5_2: {
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
+                B[x * N + y + 3] = 0;
 
-                for (i = y2 + 3; (i - 4) >= 0; i--) {
-                    B[x2 * N + i] = B[x2 * N + i - 4];
+                for (i = y + 3; (i - 5) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case RH5: {
-                B[x2 * N + y2] = 0;
-                B[x2 * N + y2 + 1] = 0;
-                B[x2 * N + y2 + 2] = 0;
-                B[x2 * N + y2 + 3] = 0;
-                B[x2 * N + y2 + 4] = 0;
+            case H5_3: {
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
 
-                for (i = y2 + 4; (i - 5) >= 0; i--) {
-                    B[x2 * N + i] = B[x2 * N + i - 5];
+                for (i = y + 2; (i - 5) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case RV3: {
-                B[(x2) * N + y2] = 0;
-                B[(x2 + 1) * N + y2] = 0;
-                B[(x2 + 2) * N + y2] = 0;
+            case H5_4: {
+                B[x * N + y - 3] = 0;
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
 
-                for (i = x2 + 2; (i - 3) >= 0; i--) {
-                    B[i * N + y2] = B[(i - 3) * N + y2];
+                for (i = y + 1; (i - 5) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case RV4: {
-                B[(x2) * N + y2] = 0;
-                B[(x2 + 1) * N + y2] = 0;
-                B[(x2 + 2) * N + y2] = 0;
-                B[(x2 + 3) * N + y2] = 0;
+            case H5_5: {
+                B[x * N + y - 4] = 0;
+                B[x * N + y - 3] = 0;
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
 
-                for (i = x2 + 3; (i - 4) >= 0; i--) {
-                    B[i * N + y2] = B[(i - 4) * N + y2];
+                for (i = y; (i - 5) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case RV5: {
-                B[(x2) * N + y2] = 0;
-                B[(x2 + 1) * N + y2] = 0;
-                B[(x2 + 2) * N + y2] = 0;
-                B[(x2 + 3) * N + y2] = 0;
-                B[(x2 + 4) * N + y2] = 0;
+            case H4_1: {
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
+                B[x * N + y + 3] = 0;
 
-                for (i = x2 + 4; (i - 5) >= 0; i--) {
-                    B[i * N + y2] = B[(i - 5) * N + y2];
+                for (i = y + 3; (i - 4) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LH3: {
-                B[x1 * N + y1] = 0;
-                B[x1 * N + y1 - 1] = 0;
-                B[x1 * N + y1 - 2] = 0;
+            case H4_2: {
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
 
-                for (i = y1 - 2; (i - 3) >= 0; i--) {
-                    B[x1 * N + i] = B[x1 * N + i - 3];
+                for (i = y + 2; (i - 4) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LH4: {
-                B[x1 * N + y1] = 0;
-                B[x1 * N + y1 - 1] = 0;
-                B[x1 * N + y1 - 2] = 0;
-                B[x1 * N + y1 - 3] = 0;
+            case H4_3: {
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
 
-                for (i = y1 - 3; (i - 4) >= 0; i--) {
-                    B[x1 * N + i] = B[x1 * N + i - 4];
+                for (i = y + 1; (i - 4) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LH5: {
-                B[x1 * N + y1] = 0;
-                B[x1 * N + y1 - 1] = 0;
-                B[x1 * N + y1 - 2] = 0;
-                B[x1 * N + y1 - 3] = 0;
-                B[x1 * N + y1 - 4] = 0;
+            case H4_4: {
+                B[x * N + y - 3] = 0;
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
 
-                for (i = y1 - 4; (i - 5) >= 0; i--) {
-                    B[x1 * N + i] = B[x1 * N + i - 5];
+                for (i = y; (i - 4) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LV3: {
-                B[(x1) * N + y1] = 0;
-                B[(x1 - 1) * N + y1] = 0;
-                B[(x1 - 2) * N + y1] = 0;
+            case H3_1: {
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
 
-                for (i = x1 - 2; (i - 3) >= 0; i--) {
-                    B[i * N + y1] = B[(i - 3) * N + y1];
+                for (i = y + 2; (i - 3) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LV4: {
-                B[(x1) * N + y1] = 0;
-                B[(x1 - 1) * N + y1] = 0;
-                B[(x1 - 2) * N + y1] = 0;
-                B[(x1 - 3) * N + y1] = 0;
+            case H3_2: {
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
 
-                for (i = x1 - 3; (i - 4) >= 0; i--) {
-                    B[i * N + y1] = B[(i - 4) * N + y1];
+                for (i = y + 1; (i - 3) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
-            case LV5: {
-                B[(x1) * N + y1] = 0;
-                B[(x1 - 1) * N + y1] = 0;
-                B[(x1 - 2) * N + y1] = 0;
-                B[(x1 - 3) * N + y1] = 0;
-                B[(x1 - 4) * N + y1] = 0;
+            case H3_3: {
+                B[x * N + y - 2] = 0;
+                B[x * N + y - 1] = 0;
+                B[x * N + y] = 0;
 
-                for (i = x1 - 4; (i - 5) >= 0; i--) {
-                    B[i * N + y1] = B[(i - 5) * N + y1];
+                for (i = y; (i - 3) >= 0 && x - 1 >= 0; i--) {
+                    B[x * N + i] = B[(x - 1) * N + i];
+                    B[(x - 1) * N + i] = 0;
                 }
                 break;
             }
+            case V5_1: {
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+                B[(x + 3) * N + y] = 0;
+                B[(x + 4) * N + y] = 0;
+
+                for (i = x + 4; (i - 5) >= 0; i--) {
+                    B[i * N + y] = B[(i - 5) * N + y];
+                    B[(i - 5) * N + y] = 0;
+                }
+                break;
+            }
+            case V5_2: {
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+                B[(x + 3) * N + y] = 0;
+
+                for (i = x + 3; (i - 5) >= 0; i--) {
+                    B[i * N + y] = B[(i - 5) * N + y];
+                    B[(i - 5) * N + y] = 0;
+                }
+                break;
+            }
+            case V5_3: {
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+
+                for (i = x + 2; (i - 5) >= 0; i--) {
+                    B[i * N + y] = B[(i - 5) * N + y];
+                    B[(i - 5) * N + y] = 0;
+                }
+                break;
+            }
+            case V5_4: {
+                B[(x - 3) * N + y] = 0;
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+
+                for (i = x + 1; (i - 5) >= 0; i--) {
+                    B[i * N + y] = B[(i - 5) * N + y];
+                    B[(i - 5) * N + y] = 0;
+                }
+                break;
+            }
+            case V5_5: {
+                B[(x - 4) * N + y] = 0;
+                B[(x - 3) * N + y] = 0;
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+
+                for (i = x; (i - 5) >= 0; i--) {
+                    B[i * N + y] = B[(i - 5) * N + y];
+                    B[(i - 5) * N + y] = 0;
+                }
+                break;
+            }
+            case V4_1: {
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+                B[(x + 3) * N + y] = 0;
+
+                for (i = x + 3; (i - 4) >= 0; i--) {
+                    B[i * N + y] = B[(i - 4) * N + y];
+                    B[(i - 4) * N + y] = 0;
+                }
+                break;
+            }
+            case V4_2: {
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+
+                for (i = x + 2; (i - 4) >= 0; i--) {
+                    B[i * N + y] = B[(i - 4) * N + y];
+                    B[(i - 4) * N + y] = 0;
+                }
+                break;
+            }
+            case V4_3: {
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+
+                for (i = x + 1; (i - 4) >= 0; i--) {
+                    B[i * N + y] = B[(i - 4) * N + y];
+                    B[(i - 4) * N + y] = 0;
+                }
+                break;
+            }
+            case V4_4: {
+                B[(x - 3) * N + y] = 0;
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+
+                for (i = x; (i - 4) >= 0; i--) {
+                    B[i * N + y] = B[(i - 4) * N + y];
+                    B[(i - 4) * N + y] = 0;
+                }
+                break;
+            }
+            case V3_1: {
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+
+                for (i = x + 2; (i - 3) >= 0; i--) {
+                    B[i * N + y] = B[(i - 3) * N + y];
+                    B[(i - 3) * N + y] = 0;
+                }
+                break;
+            }
+            case V3_2: {
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+
+                for (i = x + 1; (i - 3) >= 0; i--) {
+                    B[i * N + y] = B[(i - 3) * N + y];
+                    B[(i - 3) * N + y] = 0;
+                }
+                break;
+            }
+            case V3_3: {
+                B[(x - 2) * N + y] = 0;
+                B[(x - 1) * N + y] = 0;
+                B[(x) * N + y] = 0;
+
+                for (i = x; (i - 3) >= 0; i--) {
+                    B[i * N + y] = B[(i - 3) * N + y];
+                    B[(i - 3) * N + y] = 0;
+                }
+                break;
+            }
+
             default: {
                 break;
             }
         }
-        Thread.sleep(1500);
-        frame.repaint();
+
     }
 
     static void swap(int x1, int y1, int x2, int y2) {
@@ -657,7 +704,32 @@ public class Board {
 
         for (i = 0; i < M; i++) {
             for (j = 0; j < N - 1; j++) {
-                clear(i, j, i, j + 1);
+                if (B[i * N + j] == 0 || B[i * N + j + 1] == 0) {
+                    continue;
+                }
+                swap(i, j, i, j + 1);
+
+                frame.repaint();
+                Thread.sleep(1500);
+                printBoard();
+
+                int left_res = checkLine(i, j);
+                int right_res = checkLine(i, j + 1);
+
+                if (left_res == NOLINE && right_res == NOLINE) {
+                    swap(i, j, i, j + 1);
+
+                    frame.repaint();
+                    Thread.sleep(1500);
+                    printBoard();
+                } else {
+                    clear(i, j, left_res);
+                    clear(i, j + 1, right_res);
+
+                    frame.repaint();
+                    Thread.sleep(1500);
+                    printBoard();
+                }
             }
         }
 
