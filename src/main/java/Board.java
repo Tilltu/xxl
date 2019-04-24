@@ -388,7 +388,7 @@ public class Board {
             frame.repaint();
         }*/
 
-        int i;  // counter
+        int i, j;  // counter
         switch (res) {
             case H5_1: {
                 B[x * N + y] = 0;
@@ -397,9 +397,11 @@ public class Board {
                 B[x * N + y + 3] = 0;
                 B[x * N + y + 4] = 0;
 
-                for (i = y + 4; (i - 5) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y; i < y + 5; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -410,9 +412,11 @@ public class Board {
                 B[x * N + y + 2] = 0;
                 B[x * N + y + 3] = 0;
 
-                for (i = y + 3; (i - 5) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 1; i < y + 4; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -423,9 +427,11 @@ public class Board {
                 B[x * N + y + 1] = 0;
                 B[x * N + y + 2] = 0;
 
-                for (i = y + 2; (i - 5) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 2; i < y + 3; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -436,9 +442,11 @@ public class Board {
                 B[x * N + y] = 0;
                 B[x * N + y + 1] = 0;
 
-                for (i = y + 1; (i - 5) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 3; i < y + 2; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -449,9 +457,11 @@ public class Board {
                 B[x * N + y - 1] = 0;
                 B[x * N + y] = 0;
 
-                for (i = y; (i - 5) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 4; i < y + 1; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -461,9 +471,11 @@ public class Board {
                 B[x * N + y + 2] = 0;
                 B[x * N + y + 3] = 0;
 
-                for (i = y + 3; (i - 4) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y; i < y + 4; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -473,9 +485,11 @@ public class Board {
                 B[x * N + y + 1] = 0;
                 B[x * N + y + 2] = 0;
 
-                for (i = y + 2; (i - 4) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 1; i < y + 3; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -485,9 +499,11 @@ public class Board {
                 B[x * N + y] = 0;
                 B[x * N + y + 1] = 0;
 
-                for (i = y + 1; (i - 4) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 2; i < y + 2; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -497,9 +513,11 @@ public class Board {
                 B[x * N + y - 1] = 0;
                 B[x * N + y] = 0;
 
-                for (i = y; (i - 4) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 3; i < y + 1; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -508,9 +526,11 @@ public class Board {
                 B[x * N + y + 1] = 0;
                 B[x * N + y + 2] = 0;
 
-                for (i = y + 2; (i - 3) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y; i < y + 3; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -519,9 +539,11 @@ public class Board {
                 B[x * N + y] = 0;
                 B[x * N + y + 1] = 0;
 
-                for (i = y + 1; (i - 3) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 1; i < y + 2; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
@@ -530,9 +552,11 @@ public class Board {
                 B[x * N + y - 1] = 0;
                 B[x * N + y] = 0;
 
-                for (i = y; (i - 3) >= 0 && x - 1 >= 0; i--) {
-                    B[x * N + i] = B[(x - 1) * N + i];
-                    B[(x - 1) * N + i] = 0;
+                for (i = y - 2; i < y + 1; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
                 }
                 break;
             }
