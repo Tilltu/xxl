@@ -22,14 +22,25 @@ public class Board {
         }
     }
 
-    static final int M = 5;
-    static final int N = 5;
+    static final int M = 4;
+    static final int N = 4;
     static final int K = 3;
     static int[] B = new int[M * N];   // 降维
+
+    static int points = 0;
+
+    private static void resetPoints() {
+        points = 0;
+    }
+
+    private static void addPoints(int p) {
+        points += p;
+    }
 
     /**
      * Point Gain Pattern
      */
+    private static final int HV3 = 66;
     private static final int H3_1 = 100;
     private static final int H3_2 = 110;
     private static final int H3_3 = 120;
@@ -125,12 +136,11 @@ public class Board {
         for (i = 0; i < M; i++) {
             for (j = 0; j < N; j++) {
                 int filler = random.nextInt(K) + 1;
-                B[i * N + j] = filler;
 
-                while (hasLine(i, j, filler)) {
+                do {
                     filler = random.nextInt(K) + 1;
                     B[i * N + j] = filler;
-                }
+                } while (checkLine(i, j) != NOLINE);
             }
         }
     }
@@ -150,6 +160,20 @@ public class Board {
         System.out.println("\n");
     }
 
+    static void sanitize() {
+        int i, j;
+
+        for (i = 0; i < M; i++) {
+            for (j = 0; j < N; j++) {
+                if (B[i * N + j] == 0) {
+                    continue;
+                }
+                int res = checkLine(i, j);
+                clear(i, j, res);
+            }
+        }
+    }
+
     /**
      * @param x
      * @param y
@@ -157,9 +181,7 @@ public class Board {
      */
     static int checkLine(int x, int y) {
         int color = B[x * N + y];
-
         int res = NOLINE;
-
         /*
          check horizontal 5
          */
@@ -242,6 +264,14 @@ public class Board {
         if (y + 2 < N) {     // check h 3_1
             if (B[x * N + y + 1] == color &&
                     B[x * N + y + 2] == color) {
+
+                if (x + 2 < M) {  // check v 3_1
+                    if (B[(x + 1) * N + y] == color &&
+                            B[(x + 2) * N + y] == color) {
+                        return HV3;
+                    }
+                }
+
                 return H3_1;
             }
         }
@@ -340,6 +370,14 @@ public class Board {
         if (x + 2 < M) {  // check v 3_1
             if (B[(x + 1) * N + y] == color &&
                     B[(x + 2) * N + y] == color) {
+
+                if (y + 2 < N) {     // check h 3_1
+                    if (B[x * N + y + 1] == color &&
+                            B[x * N + y + 2] == color) {
+                        return HV3;
+                    }
+                }
+
                 return V3_1;
             }
         }
@@ -363,9 +401,8 @@ public class Board {
      * @param x
      * @param y
      * @param res Lined up result
-     * @throws Exception
      */
-    static void clear(int x, int y, int res) throws Exception {
+    static void clear(int x, int y, int res) {
 
 
         /*if (res != NOLINE) {
@@ -403,6 +440,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case H5_2: {
@@ -418,6 +457,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case H5_3: {
@@ -433,6 +474,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case H5_4: {
@@ -448,6 +491,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case H5_5: {
@@ -463,6 +508,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case H4_1: {
@@ -477,6 +524,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case H4_2: {
@@ -491,6 +540,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case H4_3: {
@@ -505,6 +556,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case H4_4: {
@@ -519,6 +572,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case H3_1: {
@@ -532,6 +587,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.THREE.toInt());
                 break;
             }
             case H3_2: {
@@ -545,6 +602,8 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.THREE.toInt());
                 break;
             }
             case H3_3: {
@@ -558,6 +617,33 @@ public class Board {
                         B[(x - j - 1) * N + i] = 0;
                     }
                 }
+
+                addPoints(POINT.THREE.toInt());
+                break;
+            }
+            case HV3: {
+                B[x * N + y] = 0;
+                B[x * N + y + 1] = 0;
+                B[x * N + y + 2] = 0;
+
+                B[(x) * N + y] = 0;
+                B[(x + 1) * N + y] = 0;
+                B[(x + 2) * N + y] = 0;
+
+                for (i = x + 2; (i - 3) >= 0; i--) {
+                    B[i * N + y] = B[(i - 3) * N + y];
+                    B[(i - 3) * N + y] = 0;
+                }
+
+                for (i = y; i < y + 3; i++) {
+                    for (j = 0; (x - j - 1) >= 0; j++) {
+                        B[(x - j) * N + i] = B[(x - j - 1) * N + i];
+                        B[(x - j - 1) * N + i] = 0;
+                    }
+                }
+
+                addPoints(POINT.THREE.toInt());
+                addPoints(POINT.THREE.toInt());
                 break;
             }
             case V5_1: {
@@ -571,6 +657,8 @@ public class Board {
                     B[i * N + y] = B[(i - 5) * N + y];
                     B[(i - 5) * N + y] = 0;
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case V5_2: {
@@ -584,6 +672,8 @@ public class Board {
                     B[i * N + y] = B[(i - 5) * N + y];
                     B[(i - 5) * N + y] = 0;
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case V5_3: {
@@ -597,6 +687,8 @@ public class Board {
                     B[i * N + y] = B[(i - 5) * N + y];
                     B[(i - 5) * N + y] = 0;
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case V5_4: {
@@ -610,6 +702,8 @@ public class Board {
                     B[i * N + y] = B[(i - 5) * N + y];
                     B[(i - 5) * N + y] = 0;
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case V5_5: {
@@ -623,6 +717,8 @@ public class Board {
                     B[i * N + y] = B[(i - 5) * N + y];
                     B[(i - 5) * N + y] = 0;
                 }
+
+                addPoints(POINT.FIVE.toInt());
                 break;
             }
             case V4_1: {
@@ -647,6 +743,8 @@ public class Board {
                     B[i * N + y] = B[(i - 4) * N + y];
                     B[(i - 4) * N + y] = 0;
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case V4_3: {
@@ -659,6 +757,8 @@ public class Board {
                     B[i * N + y] = B[(i - 4) * N + y];
                     B[(i - 4) * N + y] = 0;
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case V4_4: {
@@ -671,6 +771,8 @@ public class Board {
                     B[i * N + y] = B[(i - 4) * N + y];
                     B[(i - 4) * N + y] = 0;
                 }
+
+                addPoints(POINT.FOUR.toInt());
                 break;
             }
             case V3_1: {
@@ -682,6 +784,8 @@ public class Board {
                     B[i * N + y] = B[(i - 3) * N + y];
                     B[(i - 3) * N + y] = 0;
                 }
+
+                addPoints(POINT.THREE.toInt());
                 break;
             }
             case V3_2: {
@@ -693,6 +797,8 @@ public class Board {
                     B[i * N + y] = B[(i - 3) * N + y];
                     B[(i - 3) * N + y] = 0;
                 }
+
+                addPoints(POINT.THREE.toInt());
                 break;
             }
             case V3_3: {
@@ -704,6 +810,8 @@ public class Board {
                     B[i * N + y] = B[(i - 3) * N + y];
                     B[(i - 3) * N + y] = 0;
                 }
+
+                addPoints(POINT.THREE.toInt());
                 break;
             }
 
@@ -722,7 +830,11 @@ public class Board {
 
 
     /*****************************************************/
-
+    /**
+     * 遍历函数
+     *
+     * @throws Exception
+     */
     static public void traverse() throws Exception {
         int i, j;
 
@@ -753,37 +865,47 @@ public class Board {
                     frame.repaint();
                     Thread.sleep(1500);
                     printBoard();
+
+                    sanitize();
+
+                    frame.repaint();
+                    Thread.sleep(1500);   // twice sanitize // TODO: FIND A BETTER WAY
+                    printBoard();
+
+//                    sanitize();
+//
+//                    frame.repaint();
+//                    Thread.sleep(1500);
+//                    printBoard();
                 }
             }
         }
 
-        JOptionPane.showConfirmDialog(frame, "[Traverse Done!]");
+        String point_str = String.valueOf(points);
+        JOptionPane.showMessageDialog(frame, "[TotalPoints: " + point_str + "]", "[Traverse Done!]", JOptionPane.INFORMATION_MESSAGE);
 
         System.exit(0);
     }
 
+    /**
+     * Main Function
+     * @param args
+     * @throws Exception
+     */
     public static void main(String... args) throws Exception {
-
-        /*for (int i = 0; i < 3; i++) {
-            Thread.sleep(2000);
-
-            swap(0, i, 0, i + 1);
-
-            System.out.println();
-            printBoard();
-
-            frame.repaint();
-        }*/
+        resetPoints();
         traverse();
     }
 }
 
-
+/**
+ * Visualization
+ */
 class VisualBoard extends JLabel {
-    static int m;
-    static int n;
-    static int k;
-    static int[] b;
+    int m;
+    int n;
+    int k;
+    int[] b;
 
     public VisualBoard(@NotNull int[] board, int m, int n, int k) {
         b = board;
